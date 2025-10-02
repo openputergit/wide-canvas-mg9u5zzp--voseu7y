@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Replit AI Prompt Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #1a2e35 0%, #0d1b20 100%);
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen text-white">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl md:text-4xl font-bold text-center mb-8">Replit AI Project Prompt Generator</h1>
+        
+        <div class="max-w-3xl mx-auto bg-white/10 rounded-lg p-6 backdrop-blur-sm">
+            <div class="space-y-6">
+                <div class="project-type mb-8">
+                    <h2 class="text-xl font-semibold mb-4">Select Project Type</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <button class="project-btn p-4 rounded-lg border border-blue-500 hover:bg-blue-500/20 transition-all" data-type="chatbot">
+                            <i class="bi bi-chat-dots text-2xl mb-2"></i>
+                            <p>AI Chatbot</p>
+                        </button>
+                        <button class="project-btn p-4 rounded-lg border border-green-500 hover:bg-green-500/20 transition-all" data-type="search">
+                            <i class="bi bi-search text-2xl mb-2"></i>
+                            <p>Search Engine</p>
+                        </button>
+                        <button class="project-btn p-4 rounded-lg border border-purple-500 hover:bg-purple-500/20 transition-all" data-type="qa">
+                            <i class="bi bi-question-circle text-2xl mb-2"></i>
+                            <p>Community Q&A</p>
+                        </button>
+                        <button class="project-btn p-4 rounded-lg border border-yellow-500 hover:bg-yellow-500/20 transition-all" data-type="marketplace">
+                            <i class="bi bi-shop text-2xl mb-2"></i>
+                            <p>Freelancer Marketplace</p>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="output-section">
+                    <h2 class="text-xl font-semibold mb-4">Generated Prompt</h2>
+                    <div class="bg-gray-800 rounded-lg p-4">
+                        <pre id="promptOutput" class="whitespace-pre-wrap text-sm"></pre>
+                        <button id="copyBtn" class="mt-4 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-all">
+                            <i class="bi bi-clipboard mr-2"></i>Copy Prompt
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const prompts = {
+            chatbot: `Create an AI chatbot application with the following features:
+- Modern UI with a chat interface
+- Message history storage
+- User authentication system
+- Response streaming
+- Error handling
+- Mobile-responsive design
+Use Python with Flask for backend, SQLite for database, and HTML/CSS/JavaScript for frontend.`,
+            search: `Build a search engine with these components:
+- Clean search interface
+- Advanced search filters
+- Search results pagination
+- Relevant result highlighting
+- Search history
+- Mobile-friendly design
+Use Python with FastAPI, Elasticsearch, and React for the frontend.`,
+            qa: `Develop a community Q&A platform including:
+- Question posting and answering
+- Voting system
+- User profiles
+- Tags and categories
+- Reputation system
+- Responsive design
+Use Django, PostgreSQL, and Vue.js stack.`,
+            marketplace: `Create a freelancer marketplace with:
+- User profiles (clients/freelancers)
+- Project posting/bidding
+- Messaging system
+- Payment integration
+- Review system
+- Responsive layout
+Use Node.js, MongoDB, and React with Redux.`
+        };
+
+        document.querySelectorAll('.project-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const type = btn.dataset.type;
+                document.getElementById('promptOutput').textContent = prompts[type];
+                
+                // Visual feedback
+                document.querySelectorAll('.project-btn').forEach(b => 
+                    b.classList.remove('bg-opacity-20'));
+                btn.classList.add('bg-opacity-20');
+            });
+        });
+
+        document.getElementById('copyBtn').addEventListener('click', () => {
+            const prompt = document.getElementById('promptOutput').textContent;
+            navigator.clipboard.writeText(prompt).then(() => {
+                const btn = document.getElementById('copyBtn');
+                btn.innerHTML = '<i class="bi bi-check2 mr-2"></i>Copied!';
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="bi bi-clipboard mr-2"></i>Copy Prompt';
+                }, 2000);
+            });
+        });
+    </script>
+<script>document.body.addEventListener('wheel', e => { if (!e.ctrlKey) return; e.preventDefault(); return }, { passive: false })</script>
+	</body>
+</html>
